@@ -1,0 +1,11 @@
+# gitignore files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.DS_Store
+*.test
+*.idea
+*.out
+vendor/
