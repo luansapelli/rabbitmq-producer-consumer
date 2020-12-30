@@ -7,5 +7,6 @@
 *.DS_Store
 *.test
 *.idea
+.idea
 *.out
 vendor/
