@@ -2,20 +2,24 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/luansapelli/rabbitmq-producer-consumer/rabbitmq/config"
+	"github.com/google/uuid"
+	"github.com/luansapelli/rabbitmq-producer-consumer/config"
 	"github.com/luansapelli/rabbitmq-producer-consumer/utils"
 	"github.com/streadway/amqp"
 	"log"
-	"time"
 )
 
 type RabbitMessage struct {
-	DateTime    time.Time `json:"dateTime"`
-	ServiceName string    `json:"serviceName"`
-	Name        string    `json:"name"`
-	Age         int       `json:"age"`
-	Country     string    `json:"country"`
-	Message     string    `json:"message"`
+	Uuid        string `json:"uuid"`
+	ServiceName string `json:"serviceName"`
+	Name        string `json:"name"`
+	Age         int    `json:"age"`
+	Country     string `json:"country"`
+	Message     string `json:"message"`
+}
+
+func main() {
+	InitRabbitProducer()
 }
 
 func InitRabbitProducer() {
@@ -24,8 +28,13 @@ func InitRabbitProducer() {
 
 	defer rabbitConfig.Conn.Close()
 
+	// Generate UUID for each message
+	UUID, _ := uuid.NewRandom()
+	messageUuid := UUID.String()
+
+	// Message to RabbitMQ
 	message := RabbitMessage{
-		DateTime:    time.Now(),
+		Uuid:        messageUuid,
 		ServiceName: "rabbitmq-producer-consumer",
 		Name:        "Luan Sapelli",
 		Age:         21,
