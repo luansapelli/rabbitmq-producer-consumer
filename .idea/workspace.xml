@@ -20,16 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b36ea4ab-8186-4276-b4de-d0464c7be10c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/rabbitmq-producer-consumer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/consumer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/producer/producer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +62,7 @@
       <recent name="$PROJECT_DIR$/rabbit" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
+  <component name="RunManager" selected="Docker.docker-compose.yaml.rabbitmq: Compose Deployment">
     <configuration name="go build github.com/luansapelli/rabbitmq-producer-consumer/consumer" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="rabbitmq-producer-consumer" />
       <working_directory value="$PROJECT_DIR$" />
@@ -98,12 +91,37 @@
       <directory value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml.rabbitmq: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="rabbitmq" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Go Build.go build main.go" />
       <item itemvalue="Go Build.go build github.com/luansapelli/rabbitmq-producer-consumer/consumer" />
+      <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yaml.rabbitmq: Compose Deployment" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yaml.rabbitmq: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
         <item itemvalue="Go Build.go build github.com/luansapelli/rabbitmq-producer-consumer/consumer" />
       </list>
     </recent_temporary>
@@ -183,10 +201,14 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1609341355383" />
-    <state x="385" y="182" width="670" height="628" key="search.everywhere.popup" timestamp="1609353770180">
+    <state x="385" y="182" width="670" height="628" key="search.everywhere.popup" timestamp="1609355382381">
       <screen x="0" y="0" width="1440" height="836" />
     </state>
-    <state x="385" y="182" width="670" height="628" key="search.everywhere.popup/0.0.1440.836@0.0.1440.836" timestamp="1609353770180" />
+    <state x="385" y="182" width="670" height="628" key="search.everywhere.popup/0.0.1440.836@0.0.1440.836" timestamp="1609355382381" />
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1609343965293" />
+    <state x="450" y="337" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1609355917598">
+      <screen x="0" y="0" width="1440" height="836" />
+    </state>
+    <state x="450" y="337" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1440.836@0.0.1440.836" timestamp="1609355917598" />
   </component>
 </project>
