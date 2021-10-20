@@ -1,5 +1,5 @@
-github.com/google/uuid v1.1.2 h1:EVhdT+1Kseyi1/pUmXKaFxYsDNy9RQYkMWRH68J/W7Y=
-github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/uuid v1.3.0 h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
+github.com/google/uuid v1.3.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/masnun/gopher-and-rabbit v0.0.0-20190223090227-19d477901766 h1:AGGu+wx0jRQ6lzXIkByhPB2pjob1smxISVPDNi934Es=
 github.com/masnun/gopher-and-rabbit v0.0.0-20190223090227-19d477901766/go.mod h1:5Kk7uXrhDdti9Fj38/bNrV7IjMtJq5EIYqkOu5Mze4A=
 github.com/streadway/amqp v0.0.0-20190214183023-884228600bc9/go.mod h1:1WNBiOZtZQLpVAyu0iTduoJL9hEsMloAK5XWrtW0xdY=

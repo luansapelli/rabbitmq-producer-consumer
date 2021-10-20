@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"log"
+
 	"github.com/google/uuid"
 	"github.com/luansapelli/rabbitmq-producer-consumer/config"
-	"github.com/luansapelli/rabbitmq-producer-consumer/utils"
+	"github.com/luansapelli/rabbitmq-producer-consumer/helper"
 	"github.com/streadway/amqp"
-	"log"
 )
 
 type RabbitMessage struct {
@@ -19,43 +20,39 @@ type RabbitMessage struct {
 }
 
 func main() {
-	InitRabbitProducer()
+	rabbit := config.RabbitConfig()
+	startProducer(rabbit)
 }
 
-func InitRabbitProducer() {
-
-	rabbitConfig := config.RabbitMqConfig()
-
-	defer rabbitConfig.Conn.Close()
+func startProducer(rabbit *config.RabbitMQ) {
+	defer rabbit.Connection.Close()
 
 	// Generate UUID for each message
-	UUID, _ := uuid.NewRandom()
-	messageUuid := UUID.String()
+	uuid := uuid.NewString()
 
 	// Message to RabbitMQ
 	message := RabbitMessage{
-		Uuid:        messageUuid,
+		Uuid:        uuid,
 		ServiceName: "rabbitmq-producer-consumer",
-		Name:        "Luan Sapelli",
+		Name:        "Luan Felipe Sapelli",
 		Age:         21,
 		Country:     "Brazil",
 		Message:     "Hello World!",
 	}
 
-	body, err := json.Marshal(message)
+	rawMessage, err := json.Marshal(message)
 	if err != nil {
-		utils.HandleError(err, "Error encoding JSON")
+		helper.FailOnError(err, "error to marshal message")
 	}
 
-	err = rabbitConfig.Channel.Publish("", rabbitConfig.Queue.Name, false, false, amqp.Publishing{
+	err = rabbit.Channel.Publish("", rabbit.Queue.Name, false, false, amqp.Publishing{
 		DeliveryMode: amqp.Persistent,
 		ContentType:  "application/json",
-		Body:         body,
+		Body:         rawMessage,
 	})
-
 	if err != nil {
-		log.Fatalf("Error publishing message: %s", err)
+		helper.FailOnError(err, "error to publish message")
 	}
 
-	log.Printf("Message sent: %v", message)
+	log.Printf("message sent: %v", message)
 }

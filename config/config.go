@@ -1,29 +1,28 @@
 package config
 
 import (
-	"github.com/luansapelli/rabbitmq-producer-consumer/utils"
-	golangrabbit "github.com/masnun/gopher-and-rabbit"
+	"github.com/luansapelli/rabbitmq-producer-consumer/helper"
+	goRabbit "github.com/masnun/gopher-and-rabbit"
 	"github.com/streadway/amqp"
 )
 
-type RbmqConfig struct {
-	Queue   amqp.Queue
-	Channel *amqp.Channel
-	Conn    *amqp.Connection
-	RbmqErr error
+type RabbitMQ struct {
+	Queue      amqp.Queue
+	Channel    *amqp.Channel
+	Connection *amqp.Connection
+	Error      error
 }
 
-func RabbitMqConfig() *RbmqConfig {
+func RabbitConfig() *RabbitMQ {
+	rabbit := new(RabbitMQ)
 
-	config := &RbmqConfig{}
+	rabbit.Connection, rabbit.Error = amqp.Dial(goRabbit.Config.AMQPConnectionURL)
+	helper.FailOnError(rabbit.Error, "failed to connect on RabbitMQ")
 
-	config.Conn, config.RbmqErr = amqp.Dial(golangrabbit.Config.AMQPConnectionURL)
-	utils.HandleError(config.RbmqErr, "Failed to connect to RabbitMQ")
+	rabbit.Channel, rabbit.Error = rabbit.Connection.Channel()
+	helper.FailOnError(rabbit.Error, "failed to open a channel")
 
-	config.Channel, config.RbmqErr = config.Conn.Channel()
-	utils.HandleError(config.RbmqErr, "Failed to open a channel")
-
-	config.Queue, config.RbmqErr = config.Channel.QueueDeclare(
+	rabbit.Queue, rabbit.Error = rabbit.Channel.QueueDeclare(
 		"myqueue",
 		true,  // durable
 		false, // delete when unused
@@ -31,10 +30,10 @@ func RabbitMqConfig() *RbmqConfig {
 		false, // no-wait
 		nil,   // arguments
 	)
-	utils.HandleError(config.RbmqErr, "Could not declare `myqueue` queue")
+	helper.FailOnError(rabbit.Error, "could not declare `myqueue` queue")
 
-	RbmqErr := config.Channel.Qos(1, 0, false)
-	utils.HandleError(RbmqErr, "Could not configure QoS")
+	err := rabbit.Channel.Qos(1, 0, false)
+	helper.FailOnError(err, "could not configure QoS")
 
-	return config
+	return rabbit
 }

@@ -1,8 +1,8 @@
-package utils
+package helper
 
 import "log"
 
-func HandleError(err error, msg string) {
+func FailOnError(err error, msg string) {
 	if err != nil {
 		log.Printf("%s: %s", err, msg)
 	}
