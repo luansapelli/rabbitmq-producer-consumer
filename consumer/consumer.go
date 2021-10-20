@@ -2,28 +2,27 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/luansapelli/rabbitmq-producer-consumer/config"
-	"github.com/luansapelli/rabbitmq-producer-consumer/utils"
-	"github.com/streadway/amqp"
 	"log"
 	"os"
+
+	"github.com/luansapelli/rabbitmq-producer-consumer/config"
+	"github.com/luansapelli/rabbitmq-producer-consumer/helper"
+	"github.com/streadway/amqp"
 )
 
-func main (){
-	InitRabbitConsumer()
+func main() {
+	rabbit := config.RabbitConfig()
+	startConsumer(rabbit)
 }
 
-func InitRabbitConsumer() {
+func startConsumer(rabbit *config.RabbitMQ) {
+	var channel <-chan amqp.Delivery
+	var messageInterface map[string]interface{}
 
-	var messageChannel <-chan amqp.Delivery
-	var messageJSON map[string]interface{}
+	defer rabbit.Connection.Close()
 
-	rabbitConfig := config.RabbitMqConfig()
-
-	defer rabbitConfig.Conn.Close()
-
-	messageChannel, rabbitConfig.RbmqErr = rabbitConfig.Channel.Consume(
-		rabbitConfig.Queue.Name,
+	channel, rabbit.Error = rabbit.Channel.Consume(
+		rabbit.Queue.Name,
 		"",
 		false,
 		false,
@@ -31,30 +30,29 @@ func InitRabbitConsumer() {
 		false,
 		nil,
 	)
-	utils.HandleError(rabbitConfig.RbmqErr, "Could not register consumer")
+	helper.FailOnError(rabbit.Error, "could not register consumer")
 
-	stopChan := make(chan bool)
+	stopChannel := make(chan bool)
 
 	go func() {
-		log.Printf("Consumer ready, PID: %d", os.Getpid())
+		log.Printf("consumer ready, PID: %v", os.Getpid())
 
-		for i := range messageChannel {
-			log.Printf("Message received: %s", i.Body)
+		for message := range channel {
+			log.Printf("message received: %s", message.Body)
 
-			err := json.Unmarshal(i.Body, &messageJSON)
+			err := json.Unmarshal(message.Body, &messageInterface)
 			if err != nil {
-				log.Printf("Error decoding JSON: %s", err)
+				log.Printf("error decoding Json: %s", err)
 			}
 
-			if err := i.Ack(false); err != nil {
-				log.Printf("Error acknowledging message : %s", err)
+			if err := message.Ack(false); err != nil {
+				log.Printf("error acknowledging message : %s", err)
 			} else {
-				log.Printf("Acknowledged message")
+				log.Printf("acknowledged message")
 			}
 		}
 	}()
 
 	// Stop for program termination
-	<-stopChan
-
+	<-stopChannel
 }
