@@ -1,9 +1,8 @@
-# rabbitnq-producer-consumer 🧙🏽‍♂️
+# rabbitmq-producer-consumer 🧙🏽‍♂️
 
 This service send a message to RabbitMQ queue and consume this message.
 
 ### how-to
-
 - Start RabbitMQ using the `docker-compose-yaml` file (make sure the Docker is running).
 - Access `http://localhost:15672/` to make sure if RabbitMQ is running (username: `guest`, password: `guest`).
 - Execute `go run consumer/consumer.go`, in terminal you can see this message: `Consumer ready, PID: 55725` (let it run in a separated terminal).
